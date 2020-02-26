@@ -10,5 +10,5 @@ interface UserRepositoryInterface
 
     public function findByTwitchId(string $twitchId);
 
-    public function findOrUpsert($data): User;
+    public function create($data): User;
 }

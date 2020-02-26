@@ -16,3 +16,5 @@ Route::get('/', 'HomeController@index')->name('index');
 Route::get('/login', 'HomeController@login')->name('login');
 
 Route::get('/redirect', 'HomeController@redirect')->name('redirect');
+
+Route::get('/logout', 'HomeController@logout')->name('logout');

@@ -26,20 +26,14 @@ class UserRepository implements UserRepositoryInterface
         return User::where('twitch_id', $twitchId)->first();
     }
 
-    public function findOrUpsert($data): User
+    public function create($data): User
     {
-        $user = $this->findByTwitchId($data->id);
-
-        if (!$user) {
-            $user = User::create([
-                'twitch_id' => $data->id,
-                'login_name' => $data->login,
-                'display_name' => $data->display_name,
-                'email' => $data->email,
-                'profile_image' => $data->profile_image_url
-            ]);
-        }
-
-        return $user;
+        return User::create([
+            'twitch_id' => $data->id,
+            'login_name' => $data->login,
+            'display_name' => $data->display_name,
+            'email' => $data->email,
+            'profile_image' => $data->profile_image_url
+        ]);
     }
 }

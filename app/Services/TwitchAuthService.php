@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
@@ -60,8 +61,11 @@ class TwitchAuthService
     {
         $data = $response['content']->data[0];
 
-        $user = $userRepository->findOrUpsert($data);
-        $user->assignRole(['editor', 'administrator']);
+        $user = $userRepository->findByTwitchId($data->id);
+
+        if (!$user) {
+            $user = $userRepository->create($data);
+        }
 
         Auth::login($user);
     }

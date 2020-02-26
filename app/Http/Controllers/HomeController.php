@@ -36,7 +36,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        return view('welcome', [
+        return view('index', [
             'user' => $user
         ]);
     }
@@ -87,6 +87,13 @@ class HomeController extends Controller
         $this->authService->authenticateUser($response, $this->userRepository);
 
         return redirect()->route('index');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return back();
     }
 
     /**
