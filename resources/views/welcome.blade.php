@@ -8,6 +8,12 @@
     <title>Twitch OAuth</title>
 </head>
 <body>
-<a href="{{ $authUrl }}">Auth with Twitch</a>
+@guest
+    Welcome, guest
+@endguest
+
+@auth
+    Welcome, {{ $user->display_name }}
+@endauth
 </body>
 </html>

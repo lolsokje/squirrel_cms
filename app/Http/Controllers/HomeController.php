@@ -2,70 +2,99 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Services\TwitchAuthService;
 use GuzzleHttp\Client;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    const TWITCH_BASE_API = 'https://id.twitch.tv/oauth2';
     const SCOPE = 'user:read:email';
 
     private Client $client;
 
-    public function __construct()
-    {
+    private UserRepositoryInterface $userRepository;
+
+    private TwitchAuthService $authService;
+
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        TwitchAuthService $authService
+    ) {
+        $this->userRepository = $userRepository;
         $this->client = new Client();
+        $this->authService = $authService;
     }
 
-    public function index()
+    /**
+     * @return View
+     */
+    public function index(): View
     {
-        $clientId = config('twitch.client_id');
-        $redirectUrl = route('redirect', [], true);
-        $scope = self::SCOPE;
-        $state = config('twitch.state');
-
-        $authUrl = self::TWITCH_BASE_API . "/authorize?client_id={$clientId}&redirect_uri={$redirectUrl}&response_type=code&scope={$scope}&state={$state}";
+        $user = Auth::user();
 
         return view('welcome', [
-            'authUrl' => $authUrl
+            'user' => $user
         ]);
     }
 
-    public function redirect(Request $request)
+    /**
+     * @return RedirectResponse
+     */
+    public function login(): RedirectResponse
+    {
+        if (!Auth::check()) {
+            $clientId = config('twitch.client_id');
+            $redirectUrl = route('redirect', [], true);
+            $scope = self::SCOPE;
+            $state = config('twitch.state');
+
+            $authUrl = TwitchAuthService::TWITCH_BASE_AUTH_URL . "/authorize?client_id={$clientId}&redirect_uri={$redirectUrl}&response_type=code&scope={$scope}&state={$state}";
+
+            return redirect($authUrl);
+        }
+        return redirect()->route('index');
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function redirect(Request $request): RedirectResponse
     {
         $state = $request->get('state');
 
         if ($state !== config('twitch.state')) {
-            dd('invalid request');
+            $this->handleRequestError('invalid state');
         }
 
-        $code = $request->get('code');
-        $clientId = config('twitch.client_id');
-        $clientSecret = config('twitch.client_secret');
-        $grantType = 'authorization_code';
-        $redirectUrl = route('redirect', [], true);
+        $response = $this->authService->fetchAccessToken($request);
 
-        $url = self::TWITCH_BASE_API . "/token?client_id={$clientId}&client_secret={$clientSecret}&code={$code}&grant_type={$grantType}&redirect_uri={$redirectUrl}";
+        if ($response['status'] !== 200) {
+            $this->handleRequestError($response['content']);
+        }
+        $accessToken = $response['content']->access_token;
 
-        $response = $this->client->post($url);
+        $response = $this->authService->fetchUserData($accessToken);
 
-        if ($response->getStatusCode() === 200) {
-            $content = json_decode($response->getBody()->getContents());
-            $accesstoken = $content->access_token;
-
-            $response = $this->client->get('https://api.twitch.tv/helix/users', [
-                'headers' => [
-                    'Authorization' => "Bearer {$accesstoken}"
-                ]
-            ]);
-
-            if ($response->getStatusCode() === 200) {
-                $content = json_decode($response->getBody()->getContents());
-
-                dd($content);
-            }
+        if ($response['status'] !== 200) {
+            $this->handleRequestError($response['content']);
         }
 
-        dd($response->getBody()->getContents());
+        $this->authService->authenticateUser($response, $this->userRepository);
+
+        return redirect()->route('index');
+    }
+
+    /**
+     * @param $message
+     */
+    private function handleRequestError($message)
+    {
+        // TODO better error handling
+        dd($message);
     }
 }
