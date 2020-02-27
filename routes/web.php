@@ -28,3 +28,7 @@ Route::prefix('admin')->group(function () {
 
     Route::post('/users/update/{user}', 'AdminController@updateUser')->name('admin.users.update');
 });
+
+Route::resources([
+    'articles' => 'ArticleController'
+]);

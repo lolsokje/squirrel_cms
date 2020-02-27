@@ -2,7 +2,9 @@
 
 @section('content')
     <div class="container">
-        <h1>Admin Panel</h1>
+        <div class="page-header">
+            <h1>Admin Panel</h1>
+        </div>
 
         <div id="admin-panel-wrapper">
             <a href="{{ route('admin.users') }}" class="admin-panel-item">

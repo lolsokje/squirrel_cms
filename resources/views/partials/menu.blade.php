@@ -5,7 +5,7 @@
                 @auth
                     <li class="list-item">{{ ucfirst(auth()->user()->display_name) }}</li>
                     @can('edit articles')
-                        <li class="list-item"><a href="#">Articles</a></li>
+                        <li class="list-item"><a href="{{ route('articles.index') }}">Articles</a></li>
                     @endcan
                     @can('manage')
                         <li class="list-item"><a href="{{ route('admin.index') }}">Admin Panel</a></li>

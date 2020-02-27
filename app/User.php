@@ -30,4 +30,9 @@ class User extends Authenticatable
             'role_id'
         )->with('permissions');
     }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'user_twitch_id');
+    }
 }

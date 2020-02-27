@@ -8,6 +8,6 @@
         <input name="manage" type="checkbox" {{ $user->can('manage') ? 'checked' : '' }}>
     </td>
     <td>
-        <button type="submit" class="btn btn-primary save-button">Update</button>
+        <a href="#" class="btn btn-primary">Update</a>
     </td>
 </tr>
