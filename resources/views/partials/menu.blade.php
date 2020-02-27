@@ -1,14 +1,14 @@
 <div id="nav">
-    <div class="container">
+    <div class="container nav-bar">
         <div id="left">
             <ul>
                 @auth
-                    <li class="list-item">{{ ucfirst($user->display_name) }}</li>
+                    <li class="list-item">{{ ucfirst(auth()->user()->display_name) }}</li>
                     @can('edit articles')
                         <li class="list-item"><a href="#">Articles</a></li>
                     @endcan
                     @can('manage')
-                        <li class="list-item"><a href="#">Manage</a></li>
+                        <li class="list-item"><a href="{{ route('admin.index') }}">Admin Panel</a></li>
                     @endcan
                 @endauth
                 <li class="list-item"><a href="#">All Articles</a></li>

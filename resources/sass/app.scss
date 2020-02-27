@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 $text-colour: #CCCCCC;
+$background-color-dark: rgba(0, 0, 0, 0.81);
 
 * {
     margin: 0;
@@ -19,17 +20,21 @@ ul {
 .container {
     width: 60%;
     margin: 0 auto;
+}
+
+.nav-bar {
     display: flex;
 }
 
 #nav {
     display: flex;
     flex-flow: row;
-    background-color: rgba(0, 0, 0, 0.81);
+    background-color: $background-color-dark;
     color: $text-colour;
     height: 60px;
     line-height: 60px;
     vertical-align: middle;
+    margin-bottom: 30px;
 
     #left {
         justify-content: flex-start;
@@ -55,4 +60,67 @@ ul {
             }
         }
     }
+}
+
+#admin-panel-wrapper {
+    margin-top: 40px;
+    display: flex;
+    justify-content: left;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+}
+
+.admin-panel-item {
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 200px;
+    height: 200px;
+    background-color: #ff3446;
+
+    p {
+        font-size: 14px;
+    }
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 30px auto;
+    text-align: center;
+}
+
+thead tr {
+    background-color: $background-color-dark;
+    color: $text-colour;
+
+    th {
+        padding: 10px 15px;
+    }
+}
+
+tbody tr {
+    td {
+        padding: 10px 15px;
+
+        input[type='checkbox'] {
+            text-align: center;
+        }
+    }
+}
+
+.btn {
+    width: 100px;
+    padding: 5px;
+    border-radius: 2px;
+    border: none;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.btn-primary {
+    background-color: #E9700D;
+    color: white;
 }
