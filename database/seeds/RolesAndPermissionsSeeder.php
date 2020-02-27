@@ -14,12 +14,12 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run()
     {
         $administratorRole = Role::create(['name' => 'Administrator']);
-        $administrationPermission = Permission::create(['name' => 'manage']);
-        $administrationPermission->assignRole($administratorRole);
-
         $editorRole = Role::create(['name' => 'Editor']);
+
+        $administrationPermission = Permission::create(['name' => 'manage']);
         $canEditPermission = Permission::create(['name' => 'edit articles']);
 
-        $canEditPermission->assignRole($editorRole);
+        $administratorRole->givePermissionTo($administrationPermission, $canEditPermission);
+        $editorRole->givePermissionTo($canEditPermission);
     }
 }
