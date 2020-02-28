@@ -17,4 +17,14 @@ class Article extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function url()
+    {
+        return $this->status->name === 'published' ? route('articles.show', $this) : route('articles.edit', $this);
+    }
 }

@@ -8,7 +8,7 @@
 
         <a class="btn btn-primary" href="{{ route('articles.create') }}">Publish new article</a>
 
-        <table>
+        <table class="table-border">
             <thead>
             <tr>
                 <th>Title</th>
@@ -23,12 +23,16 @@
             <tbody>
                 @foreach ($articles as $article)
                     <tr>
-                        <td>{{ $article->title }}</td>
+                        <td>
+                            <a href="{{ $article->url() }}">
+                                {{ $article->title }}
+                            </a>
+                        </td>
                         <td>{{ $article->category->name }}</td>
                         <td>{{ $article->user->display_name }}</td>
                         <td>{{ $article->created_at->diffForHumans() }}</td>
                         <td>{{ $article->updated_at->diffForHumans() }}</td>
-                        <td>Published</td>
+                        <td>{{ ucfirst($article->status->name) }}</td>
                         <td>
                             <quick-edit :article="{{ $article }}"></quick-edit>
                         </td>

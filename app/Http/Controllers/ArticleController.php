@@ -19,7 +19,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::latest()->with('category', 'user')->get();
+        $articles = Article::latest()->with('category', 'user', 'status')->paginate(25);
 
         return view('articles.index', [
             'articles' => $articles

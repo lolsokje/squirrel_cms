@@ -104,6 +104,14 @@ table {
     text-align: center;
 }
 
+.table-border {
+    border: 1px solid $text-colour;
+
+    tr {
+        border-bottom: 1px solid $text-colour;
+    }
+}
+
 thead tr {
     background-color: $background-color-dark;
     color: $text-colour;
