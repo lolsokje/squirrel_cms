@@ -13,5 +13,8 @@ yarn-error.log
 .sass-cache
 resources/sass/.sass-cache
 public/css
+public/js
+public/fonts
 resources/sass/*.css
 resources/sass/*.css.map
+.idea

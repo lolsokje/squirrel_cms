@@ -20,7 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('user-component', require('./components/UserComponent.vue').default);
-Vue.component('quick-edit', require('./components/QuickEditComponent.vue').default);
+Vue.component('quick-action', require('./components/QuickActionComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -34,7 +34,7 @@
                         <td>{{ $article->updated_at->diffForHumans() }}</td>
                         <td>{{ ucfirst($article->status->name) }}</td>
                         <td>
-                            <quick-edit :article="{{ $article }}"></quick-edit>
+                            <quick-action :article="{{ $article }}"></quick-action>
                         </td>
                     </tr>
                 @endforeach
