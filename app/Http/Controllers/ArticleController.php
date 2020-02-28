@@ -19,7 +19,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::latest()->with('category', 'user', 'status')->paginate(25);
+        $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
 
         return view('articles.index', [
             'articles' => $articles
@@ -88,6 +88,22 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $article->setStatus('deleted');
         $article->delete();
+    }
+
+    public function publish(Article $article)
+    {
+        $article->setStatus('published');
+    }
+
+    /**
+     * @param int $id
+     */
+    public function republish(int $id)
+    {
+        $article = Article::withTrashed()->findOrFail($id);
+        $article->setStatus('published');
+        $article->restore();
     }
 }

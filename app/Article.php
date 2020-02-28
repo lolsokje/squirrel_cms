@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
 {
+    use SoftDeletes;
+
     protected $guarded = [];
 
     public function user()
@@ -26,5 +29,18 @@ class Article extends Model
     public function url()
     {
         return $this->status->name === 'published' ? route('articles.show', $this) : route('articles.edit', $this);
+    }
+
+    public function setStatus(string $status)
+    {
+        $status = Status::where('name', $status)->first();
+
+        if (!$status) {
+            return;
+        }
+
+        $this->status()->dissociate();
+        $this->status()->associate($status);
+        $this->save();
     }
 }

@@ -1925,27 +1925,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['article'],
+  data: function data() {
+    return {
+      deleted: this.article.deleted_at !== null,
+      draft: this.article.status.name === 'draft'
+    };
+  },
   methods: {
     toggleQuickActions: function toggleQuickActions(event) {
-      var allQuickActions = document.querySelectorAll('.quick-actions');
       var wrapper = event.target.closest('div');
       var quickActions = wrapper.querySelector('.quick-actions');
-      allQuickActions.forEach(function (el) {
-        if (el !== quickActions) {
-          el.classList.remove('open');
-        }
-      });
+      this.hideAllQuickActionDropdowns(quickActions);
       quickActions.classList.contains('open') ? quickActions.classList.remove('open') : quickActions.classList.add('open');
     },
     edit: function edit() {
       window.location.href = "articles/".concat(this.article.id, "/edit");
     },
+    publish: function publish(event) {
+      axios.put("articles/".concat(this.article.id, "/publish"));
+      this.changeStatusText(event, 'Published');
+      this.draft = false;
+    },
     remove: function remove(event) {
       axios["delete"]("articles/".concat(this.article.id));
+      this.changeStatusText(event, 'Deleted');
+      this.deleted = true;
+    },
+    republish: function republish(event) {
+      axios.put("articles/".concat(this.article.id, "/republish"));
+      this.changeStatusText(event, 'Published');
+      this.deleted = false;
+    },
+    changeStatusText: function changeStatusText(event, text) {
       var tr = event.target.closest('tr');
-      tr.parentNode.removeChild(tr);
+      tr.querySelector('.status').innerText = text;
+      this.hideAllQuickActionDropdowns();
+    },
+    hideAllQuickActionDropdowns: function hideAllQuickActionDropdowns() {
+      var currentQuickAction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var allQuickActions = document.querySelectorAll('.quick-actions');
+      allQuickActions.forEach(function (el) {
+        if (currentQuickAction !== null) {
+          if (el !== currentQuickAction) {
+            el.classList.remove('open');
+          }
+        } else {
+          el.classList.remove('open');
+        }
+      });
     }
   }
 });
@@ -38005,6 +38036,34 @@ var render = function() {
         _c(
           "li",
           {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.draft,
+                expression: "draft"
+              }
+            ],
+            on: {
+              click: function($event) {
+                return _vm.publish($event)
+              }
+            }
+          },
+          [_vm._v("Publish")]
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.deleted,
+                expression: "!deleted"
+              }
+            ],
             on: {
               click: function($event) {
                 return _vm.remove($event)
@@ -38012,6 +38071,26 @@ var render = function() {
             }
           },
           [_vm._v("Delete")]
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.deleted && !_vm.draft,
+                expression: "deleted && !draft"
+              }
+            ],
+            on: {
+              click: function($event) {
+                return _vm.republish($event)
+              }
+            }
+          },
+          [_vm._v("Re-publish")]
         )
       ])
     ])

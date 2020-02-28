@@ -32,3 +32,7 @@ Route::prefix('admin')->group(function () {
 Route::resources([
     'articles' => 'ArticleController'
 ]);
+
+Route::put('articles/{article}/republish', 'ArticleController@republish')->name('articles.republish');
+
+Route::put('articles/{article}/publish', 'ArticleController@publish')->name('articles.publish');
