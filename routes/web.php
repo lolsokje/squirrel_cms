@@ -36,3 +36,5 @@ Route::resources([
 Route::put('articles/{article}/republish', 'ArticleController@republish')->name('articles.republish');
 
 Route::put('articles/{article}/publish', 'ArticleController@publish')->name('articles.publish');
+
+Route::get('articles/generate/{count}', 'ArticleController@generate');
