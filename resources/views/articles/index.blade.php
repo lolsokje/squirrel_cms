@@ -41,6 +41,8 @@
             </tbody>
         </table>
 
-        {{ $articles->links() }}
+        <div id="pagination-container">
+            {{ $articles->links() }}
+        </div>
     </div>
 @endsection
