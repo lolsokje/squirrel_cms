@@ -23,7 +23,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(1);
+        $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
 
         return view('articles.index', [
             'articles' => $articles
