@@ -8,6 +8,31 @@
 
         <a class="btn btn-primary" href="{{ route('articles.create') }}">Publish new article</a>
 
+        <div id="article-filter">
+            <input type="text" placeholder="Filter by title or body content">
+
+            <select name="category" id="category">
+                <option value="">Filter by category</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+
+            <select name="editor" id="editor">
+                <option value="">Filter by editor</option>
+                @foreach ($editors as $editor)
+                    <option value="{{ $editor->id }}">{{ $editor->display_name }}</option>
+                @endforeach
+            </select>
+
+            <select name="status" id="status">
+                <option value="">Filter by status</option>
+                @foreach ($statuses as $status)
+                    <option value="{{ $status->id }}">{{ ucfirst($status->name) }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <table class="table-border">
             <thead>
             <tr>

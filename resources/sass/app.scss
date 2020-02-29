@@ -200,3 +200,10 @@ table {
         color: #666666;
     }
 }
+
+#article-filter {
+    @include box-shadow;
+    margin-top: 30px;
+    background-color: white;
+    padding: 10px;
+}

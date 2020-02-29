@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Category;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Status;
+use App\User;
 use Faker\Generator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,14 +21,20 @@ class ArticleController extends Controller
     }
 
     /**
+     * @param UserRepositoryInterface $userRepository
      * @return View
      */
-    public function index()
-    {
+    public function index(
+        UserRepositoryInterface $userRepository
+    ): View {
         $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
+        $editors = $userRepository->findByRoleName('Editor');
 
         return view('articles.index', [
-            'articles' => $articles
+            'articles' => $articles,
+            'categories' => Category::all(),
+            'statuses' => Status::all(),
+            'editors' => $editors
         ]);
     }
 

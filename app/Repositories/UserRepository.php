@@ -36,4 +36,13 @@ class UserRepository implements UserRepositoryInterface
             'profile_image' => $data->profile_image_url
         ]);
     }
+
+    /**
+     * @param string $roleName
+     * @return array|User
+     */
+    public function findByRoleName(string $roleName)
+    {
+        return User::whereHas('roles', fn($q) => $q->where('name', $roleName))->get();
+    }
 }
