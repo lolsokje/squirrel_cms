@@ -9,28 +9,30 @@
         <a class="btn btn-primary" href="{{ route('articles.create') }}">Publish new article</a>
 
         <div id="article-filter">
-            <input type="text" placeholder="Filter by title or body content">
+            <input type="text" id="text" name="text" placeholder="Filter by title or body content" class="article-filter">
 
-            <select name="category" id="category">
-                <option value="">Filter by category</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
+            <div id="selects">
+                <select class="styled-select article-filter" name="category" id="category">
+                    <option value="">Filter by category</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
 
-            <select name="editor" id="editor">
-                <option value="">Filter by editor</option>
-                @foreach ($editors as $editor)
-                    <option value="{{ $editor->id }}">{{ $editor->display_name }}</option>
-                @endforeach
-            </select>
+                <select class="styled-select article-filter" name="editor" id="editor">
+                    <option value="">Filter by editor</option>
+                    @foreach ($editors as $editor)
+                        <option value="{{ $editor->twitch_id }}">{{ $editor->display_name }}</option>
+                    @endforeach
+                </select>
 
-            <select name="status" id="status">
-                <option value="">Filter by status</option>
-                @foreach ($statuses as $status)
-                    <option value="{{ $status->id }}">{{ ucfirst($status->name) }}</option>
-                @endforeach
-            </select>
+                <select class="styled-select article-filter" name="status" id="status">
+                    <option value="">Filter by status</option>
+                    @foreach ($statuses as $status)
+                        <option value="{{ $status->id }}">{{ ucfirst($status->name) }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
         <table class="table-border">
@@ -45,29 +47,19 @@
                 <th>Quick Actions</th>
             </tr>
             </thead>
-            <tbody>
-                @foreach ($articles as $article)
-                    <tr>
-                        <td>
-                            <a href="{{ $article->url() }}">
-                                {{ $article->title }}
-                            </a>
-                        </td>
-                        <td>{{ $article->category->name }}</td>
-                        <td>{{ $article->user->display_name }}</td>
-                        <td>{{ $article->created_at->diffForHumans() }}</td>
-                        <td>{{ $article->updated_at->diffForHumans() }}</td>
-                        <td class="status">{{ ucfirst($article->status->name) }}</td>
-                        <td>
-                            <quick-action :article="{{ $article }}"></quick-action>
-                        </td>
-                    </tr>
-                @endforeach
+            <tbody id="articles">
+                @include('articles.articles')
             </tbody>
         </table>
 
-        <div id="pagination-container">
-            {{ $articles->links() }}
-        </div>
+        @if ($articles->hasPages())
+            <div id="pagination-container">
+                {{ $articles->appends(request()->input())->links() }}
+            </div>
+        @endif
     </div>
+@endsection
+
+@section('js')
+    <script src="{{ asset('js/article_filter.js') }}"></script>
 @endsection

@@ -45,4 +45,16 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::whereHas('roles', fn($q) => $q->where('name', $roleName))->get();
     }
+
+    public function findByPermission(string $permission)
+    {
+        $ret = [];
+        foreach (User::all() as $user) {
+            if ($user->can('edit articles')) {
+                $ret[] = $user;
+            }
+        }
+
+        return $ret;
+    }
 }

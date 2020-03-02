@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Filters\ArticleFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -42,5 +43,10 @@ class Article extends Model
         $this->status()->dissociate();
         $this->status()->associate($status);
         $this->save();
+    }
+
+    public function scopeFilter($query, ArticleFilter $filters)
+    {
+        return $filters->apply($query);
     }
 }

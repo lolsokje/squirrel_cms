@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Category;
+use App\Filters\ArticleFilter;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Status;
 use App\User;
@@ -12,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class ArticleController extends Controller
 {
@@ -29,6 +32,7 @@ class ArticleController extends Controller
     ): View {
         $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
         $editors = $userRepository->findByRoleName('Editor');
+//        $editors = $userRepository->findByPermission('edit articles');
 
         return view('articles.index', [
             'articles' => $articles,
@@ -117,6 +121,20 @@ class ArticleController extends Controller
         $article = Article::withTrashed()->findOrFail($id);
         $article->setStatus('published');
         $article->restore();
+    }
+
+    public function filter(ArticleFilter $filters)
+    {
+        $articles = $this->getArticles($filters);
+
+        return view('articles.articles', ['articles' => $articles]);
+    }
+
+    public function getArticles(ArticleFilter $filters)
+    {
+        $articles = Article::filter($filters);
+
+        return $articles->withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
     }
 
     public function generate(int $count, Generator $faker)
