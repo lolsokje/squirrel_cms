@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Category;
+use App\Filters\ArticleFilter;
 use App\Status;
+use App\User;
 use Faker\Generator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ArticleController extends Controller
@@ -21,12 +22,15 @@ class ArticleController extends Controller
     /**
      * @return View
      */
-    public function index()
-    {
+    public function index(): View {
         $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
+        $editors = User::permission('edit articles')->get();
 
         return view('articles.index', [
-            'articles' => $articles
+            'articles' => $articles,
+            'categories' => Category::all(),
+            'statuses' => Status::all(),
+            'editors' => $editors
         ]);
     }
 
@@ -85,30 +89,37 @@ class ArticleController extends Controller
         //
     }
 
-    /**
-     * @param Article $article
-     * @return void
-     * @throws \Exception
-     */
     public function destroy(Article $article)
     {
         $article->setStatus('deleted');
         $article->delete();
+        return $article->withTrashed()->with('category', 'user', 'status')->findOrFail($article->id);
     }
 
     public function publish(Article $article)
     {
         $article->setStatus('published');
+        return $article->with('category', 'user', 'status')->findOrFail($article->id);
     }
 
-    /**
-     * @param int $id
-     */
     public function republish(int $id)
     {
         $article = Article::withTrashed()->findOrFail($id);
         $article->setStatus('published');
         $article->restore();
+        return $article->with('category', 'user', 'status')->findOrFail($id);
+    }
+
+    public function filter(ArticleFilter $filters)
+    {
+        return $this->getArticles($filters);
+    }
+
+    public function getArticles(ArticleFilter $filters)
+    {
+        $articles = Article::filter($filters);
+
+        return $articles->withTrashed()->latest()->with('category', 'user', 'status')->get();
     }
 
     public function generate(int $count, Generator $faker)

@@ -8,41 +8,16 @@
 
         <a class="btn btn-primary" href="{{ route('articles.create') }}">Publish new article</a>
 
-        <table class="table-border">
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Author</th>
-                <th>Created</th>
-                <th>Last edited</th>
-                <th>Status</th>
-                <th>Quick Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-                @foreach ($articles as $article)
-                    <tr>
-                        <td>
-                            <a href="{{ $article->url() }}">
-                                {{ $article->title }}
-                            </a>
-                        </td>
-                        <td>{{ $article->category->name }}</td>
-                        <td>{{ $article->user->display_name }}</td>
-                        <td>{{ $article->created_at->diffForHumans() }}</td>
-                        <td>{{ $article->updated_at->diffForHumans() }}</td>
-                        <td class="status">{{ ucfirst($article->status->name) }}</td>
-                        <td>
-                            <quick-action :article="{{ $article }}"></quick-action>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <article-component
+            :articles="{{ json_encode($articles->items()) }}"
+            :categories="{{ $categories }}"
+            :editors="{{ $editors }}"
+            :statuses="{{ $statuses }}"></article-component>
 
-        <div id="pagination-container">
-            {{ $articles->links() }}
-        </div>
+        @if ($articles->hasPages())
+            <div id="pagination-container">
+                {{ $articles->links() }}
+            </div>
+        @endif
     </div>
 @endsection

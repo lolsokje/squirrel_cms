@@ -42,9 +42,9 @@ class HomeController extends Controller
     }
 
     /**
-     * @return RedirectResponse
+     * @return RedirectResponse|View
      */
-    public function login(): RedirectResponse
+    public function login()
     {
         if (!Auth::check()) {
             $clientId = config('twitch.client_id');
@@ -54,7 +54,9 @@ class HomeController extends Controller
 
             $authUrl = TwitchAuthService::TWITCH_BASE_AUTH_URL . "/authorize?client_id={$clientId}&redirect_uri={$redirectUrl}&response_type=code&scope={$scope}&state={$state}";
 
-            return redirect($authUrl);
+            return view('login', [
+                'url' => $authUrl
+            ]);
         }
         return redirect()->route('index');
     }

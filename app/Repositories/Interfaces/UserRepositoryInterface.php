@@ -11,4 +11,8 @@ interface UserRepositoryInterface
     public function findByTwitchId(string $twitchId);
 
     public function create($data): User;
+
+    public function findByRoleName(string $roleName);
+
+    public function findByPermission(string $permission);
 }
