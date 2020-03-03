@@ -12,6 +12,8 @@ class Article extends Model
 
     protected $guarded = [];
 
+    protected $appends = ['articleUrl', 'createdAtForHumans', 'updatedAtForHumans'];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_twitch_id');
@@ -30,6 +32,21 @@ class Article extends Model
     public function url()
     {
         return $this->status->name === 'published' ? route('articles.show', $this) : route('articles.edit', $this);
+    }
+
+    public function getArticleUrlAttribute()
+    {
+        return $this->url();
+    }
+
+    public function getCreatedAtForHumansAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    public function getUpdatedAtForHumansAttribute()
+    {
+        return $this->updated_at->diffForHumans();
     }
 
     public function setStatus(string $status)
