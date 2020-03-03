@@ -9,9 +9,15 @@
         <a class="btn btn-primary" href="{{ route('articles.create') }}">Publish new article</a>
 
         <article-component
-            :articles="{{ $articles }}"
+            :articles="{{ json_encode($articles->items()) }}"
             :categories="{{ $categories }}"
             :editors="{{ $editors }}"
             :statuses="{{ $statuses }}"></article-component>
+
+        @if ($articles->hasPages())
+            <div id="pagination-container">
+                {{ $articles->links() }}
+            </div>
+        @endif
     </div>
 @endsection

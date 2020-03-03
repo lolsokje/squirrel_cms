@@ -23,8 +23,7 @@ class ArticleController extends Controller
      * @return View
      */
     public function index(): View {
-//        $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
-        $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->get();
+        $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
         $editors = User::permission('edit articles')->get();
 
         return view('articles.index', [
@@ -114,9 +113,6 @@ class ArticleController extends Controller
     public function filter(ArticleFilter $filters)
     {
         return $this->getArticles($filters);
-//        $articles = $this->getArticles($filters);
-
-//        return view('articles.articles', ['articles' => $articles]);
     }
 
     public function getArticles(ArticleFilter $filters)
