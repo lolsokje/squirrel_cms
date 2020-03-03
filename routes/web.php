@@ -38,3 +38,5 @@ Route::put('articles/{article}/republish', 'ArticleController@republish')->name(
 Route::put('articles/{article}/publish', 'ArticleController@publish')->name('articles.publish');
 
 Route::get('articles/generate/{count}', 'ArticleController@generate');
+
+Route::get('filters/articles', 'ArticleController@filter')->name('articles.filter');
