@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Category;
 use App\Filters\ArticleFilter;
+use App\Http\Requests\ArticleRequest;
 use App\Status;
 use App\User;
 use Faker\Generator;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ArticleController extends Controller
@@ -37,22 +40,38 @@ class ArticleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('articles.create', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return Response
+     * @param ArticleRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $request): RedirectResponse
     {
-        //
+        $article = Article::create([
+            'title' => $request->get('title'),
+            'body'  => $request->get('body'),
+            'category_id' => $request->get('category'),
+            'user_twitch_id' => Auth::user()->twitch_id
+        ]);
+
+        /** @var Article $article */
+        if ($request->get('save_action') === 'publish') {
+            $article->setStatus('published');
+        } else {
+            $article->setStatus('draft');
+        }
+
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -70,23 +89,37 @@ class ArticleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Article $article
-     * @return Response
+     * @return View
      */
     public function edit(Article $article)
     {
-        //
+        return view('articles.edit', [
+            'categories' => Category::all(),
+            'article' => $article
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param ArticleRequest $request
      * @param Article $article
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, Article $article)
+    public function update(ArticleRequest $request, Article $article)
     {
-        //
+        $article->title = $request->get('title');
+        $article->body = $request->get('body');
+        $article->category_id = $request->get('category');
+
+        /** @var Article $article */
+        if ($request->get('save_action') === 'publish') {
+            $article->setStatus('published');
+        } else {
+            $article->setStatus('draft');
+        }
+
+        return redirect()->route('index');
     }
 
     public function destroy(Article $article)

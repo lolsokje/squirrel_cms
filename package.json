@@ -24,6 +24,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "font-awesome": "^4.7.0"
+        "@ckeditor/ckeditor5-build-classic": "^17.0.0",
+        "@ckeditor/ckeditor5-vue": "^1.0.1",
+        "font-awesome": "^4.7.0",
+        "trix": "^1.2.2",
+        "vue-trumbowyg": "^3.5.0"
     }
 }
