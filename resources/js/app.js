@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import CKEditor from '@ckeditor/ckeditor5-vue';
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,6 +23,8 @@ window.Vue = require('vue');
 
 Vue.component('user-component', require('./components/UserComponent.vue').default);
 Vue.component('article-component', require('./components/ArticleTableComponent').default);
+Vue.component('wysiwyg', require('./components/Wysiwyg').default);
+Vue.use(CKEditor);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

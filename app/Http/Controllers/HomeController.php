@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\TwitchAuthService;
 use GuzzleHttp\Client;
@@ -37,7 +38,8 @@ class HomeController extends Controller
         $user = Auth::user();
 
         return view('index', [
-            'user' => $user
+            'user' => $user,
+            'articles' => Article::latest()->paginate(25)
         ]);
     }
 

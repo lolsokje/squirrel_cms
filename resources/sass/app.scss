@@ -9,11 +9,11 @@ $accent-colour: #E9700D;
 
 * {
     margin: 0;
-    padding: 0;
     font-family: 'Open Sans', sans-serif;
 }
 
 body {
+    padding: 0;
     background-color: $background-color-light;
 }
 
@@ -132,7 +132,6 @@ table {
 }
 
 .btn {
-    width: 125px;
     padding: 5px 10px;
     border-radius: 2px;
     border: none;
@@ -145,8 +144,27 @@ table {
 }
 
 .btn-primary {
+    border: 1px solid $accent-colour;
     background-color: $accent-colour;
     color: white;
+}
+
+.btn-outline-primary {
+    background-color: white;
+    border: 1px solid $accent-colour;
+    color: $accent-colour;
+}
+
+.btn-danger {
+    border: 1px solid red;
+    background-color: red;
+    color: white;
+}
+
+.btn-outline-danger {
+    background-color: white;
+    border: 1px solid red;
+    color: red;
 }
 
 #pagination-container {
@@ -232,5 +250,13 @@ table {
             border-bottom: 1px solid #CCCCCC;
             outline: none;
         }
+    }
+}
+
+.edit_buttons {
+    display: flex;
+
+    .edit_buttons_main {
+        flex-grow: 1;
     }
 }
