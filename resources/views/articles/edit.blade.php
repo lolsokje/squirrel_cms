@@ -34,8 +34,15 @@
                 </select>
             </div>
 
-            <button type="submit" name="save_action" value="publish" class="btn btn-primary">Publish now</button>
-            <button type="submit" name="save_action" value="draft" class="btn btn-outline-primary">Save as draft</button>
+            <div class="edit_buttons">
+                <div class="edit_buttons_main">
+                    <button type="submit" name="save_action" value="publish" class="btn btn-primary">Publish now</button>
+                    <button type="submit" name="save_action" value="draft" class="btn btn-outline-primary">Save as draft</button>
+                </div>
+                @if ($article->status->name === 'deleted')
+                    <button type="submit" name="save_action" value="perm_delete" class="btn btn-danger">Permanently delete</button>
+                @endif
+            </div>
         </form>
     </div>
 @endsection

@@ -155,6 +155,18 @@ table {
     color: $accent-colour;
 }
 
+.btn-danger {
+    border: 1px solid red;
+    background-color: red;
+    color: white;
+}
+
+.btn-outline-danger {
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+}
+
 #pagination-container {
     @include box-shadow;
     background-color: white;
@@ -238,5 +250,13 @@ table {
             border-bottom: 1px solid #CCCCCC;
             outline: none;
         }
+    }
+}
+
+.edit_buttons {
+    display: flex;
+
+    .edit_buttons_main {
+        flex-grow: 1;
     }
 }

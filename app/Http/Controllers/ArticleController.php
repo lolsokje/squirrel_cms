@@ -10,7 +10,6 @@ use App\Status;
 use App\User;
 use Faker\Generator;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -88,11 +87,12 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Article $article
+     * @param int $id
      * @return View
      */
-    public function edit(Article $article)
+    public function edit(int $id)
     {
+        $article = Article::withTrashed()->find($id);
         return view('articles.edit', [
             'categories' => Category::all(),
             'article' => $article
@@ -103,11 +103,20 @@ class ArticleController extends Controller
      * Update the specified resource in storage.
      *
      * @param ArticleRequest $request
-     * @param Article $article
+     * @param int $id
      * @return RedirectResponse
      */
-    public function update(ArticleRequest $request, Article $article)
+    public function update(ArticleRequest $request, int $id)
     {
+        $article = Article::withTrashed()->find($id);
+
+        $saveAction = $request->get('save_action');
+
+        if ($saveAction === 'perm_delete') {
+            $article->forceDelete();
+            return redirect()->route('articles.index');
+        }
+
         $article->title = $request->get('title');
         $article->body = $request->get('body');
         $article->category_id = $request->get('category');
