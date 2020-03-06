@@ -1,0 +1,37 @@
+@import 'variables';
+
+.btn {
+    padding: 5px 10px;
+    border-radius: 2px;
+    border: none;
+    font-size: 13px;
+    outline: none;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.btn-primary {
+    border: 1px solid $accent-colour;
+    background-color: $accent-colour;
+    color: white;
+}
+
+.btn-outline-primary {
+    background-color: white;
+    border: 1px solid $accent-colour;
+    color: $accent-colour;
+}
+
+.btn-danger {
+    border: 1px solid red;
+    background-color: red;
+    color: white;
+}
+
+.btn-outline-danger {
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+}
