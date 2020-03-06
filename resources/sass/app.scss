@@ -12,6 +12,7 @@
 body {
     padding: 0;
     background-color: $background-color-light;
+    font-size: 16px;
 }
 
 a {
@@ -219,5 +220,15 @@ table {
 
     .edit_buttons_main {
         flex-grow: 1;
+    }
+}
+
+#article-list {
+    ul {
+        list-style-type: disc;
+    }
+
+    .article-content {
+        margin: 20px 0;
     }
 }

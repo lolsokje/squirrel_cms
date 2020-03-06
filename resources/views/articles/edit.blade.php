@@ -14,10 +14,12 @@
             @csrf
             @method('PUT')
 
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" name="title" id="title" class="form-control" value="{{ $article->title }}" required>
-            </div>
+{{--            <div class="form-group">--}}
+{{--                <label for="title">Title</label>--}}
+{{--                <input type="text" name="title" id="title" class="form-control" value="{{ $article->title }}" required>--}}
+{{--            </div>--}}
+
+            <title-component :article="{{ $article }}"></title-component>
 
             <div class="form-group">
                 <label for="body">Body</label>

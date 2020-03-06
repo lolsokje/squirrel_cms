@@ -43,7 +43,6 @@
                 <td>{{ article["createdAtForHumans"] }}</td>
                 <td>{{ article["updatedAtForHumans"] }}</td>
                 <td class="status">{{ statusName(article.status.name) }}</td>
-<!--                <td><quick-action :article="article"></quick-action></td>-->
                 <td>
                     <div>
                         <button class="btn btn-primary" @click="toggleQuickActions($event, article)">
@@ -122,11 +121,11 @@
                 quickActions.classList.contains('open') ? quickActions.classList.remove('open') : quickActions.classList.add('open');
             },
             edit(article) {
-                window.location.href = `articles/${article.id}/edit`;
+                window.location.href = `articles/${article.slug}/edit`;
             },
             publish(event, article) {
                 this.publishing = true;
-                axios.put(`articles/${article.id}/publish`)
+                axios.put(`articles/${article.slug}/publish`)
                     .then((response) => {
                         this.handleRequestCallback(article, response);
                         this.publishing = false;
@@ -134,7 +133,7 @@
             },
             remove(event, article) {
                 this.removing = true;
-                axios.delete(`articles/${article.id}`)
+                axios.delete(`articles/${article.slug}`)
                     .then((response) => {
                         this.handleRequestCallback(article, response);
                         this.removing = false;
@@ -142,7 +141,7 @@
             },
             republish(event, article) {
                 this.republishing = true;
-                axios.put(`articles/${article.id}/republish`)
+                axios.put(`articles/${article.slug}/republish`)
                     .then((response) => {
                         this.handleRequestCallback(article, response);
                         this.republishing = false;

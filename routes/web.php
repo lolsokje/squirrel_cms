@@ -40,3 +40,5 @@ Route::put('articles/{article}/publish', 'ArticleController@publish')->name('art
 Route::get('articles/generate/{count}', 'ArticleController@generate');
 
 Route::get('filters/articles', 'ArticleController@filter')->name('articles.filter');
+
+Route::post('article/duplicate_slug', 'HomeController@duplicateSlug');

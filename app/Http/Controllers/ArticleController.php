@@ -60,7 +60,8 @@ class ArticleController extends Controller
             'title' => $request->get('title'),
             'body'  => $request->get('body'),
             'category_id' => $request->get('category'),
-            'user_twitch_id' => Auth::user()->twitch_id
+            'user_twitch_id' => Auth::user()->twitch_id,
+            'slug' => $request->get('slug')
         ]);
 
         /** @var Article $article */
@@ -87,12 +88,12 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param string $slug
      * @return View
      */
-    public function edit(int $id)
+    public function edit(string $slug)
     {
-        $article = Article::withTrashed()->find($id);
+        $article = Article::withTrashed()->where('slug', $slug)->first();
         return view('articles.edit', [
             'categories' => Category::all(),
             'article' => $article
@@ -103,12 +104,12 @@ class ArticleController extends Controller
      * Update the specified resource in storage.
      *
      * @param ArticleRequest $request
-     * @param int $id
+     * @param string $slug
      * @return RedirectResponse
      */
-    public function update(ArticleRequest $request, int $id)
+    public function update(ArticleRequest $request, string $slug)
     {
-        $article = Article::withTrashed()->find($id);
+        $article = Article::withTrashed()->where('slug', $slug)->first();
 
         $saveAction = $request->get('save_action');
 
@@ -144,12 +145,12 @@ class ArticleController extends Controller
         return $article->with('category', 'user', 'status')->findOrFail($article->id);
     }
 
-    public function republish(int $id)
+    public function republish(string $slug)
     {
-        $article = Article::withTrashed()->findOrFail($id);
+        $article = Article::withTrashed()->where('slug', $slug)->first();
         $article->setStatus('published');
         $article->restore();
-        return $article->with('category', 'user', 'status')->findOrFail($id);
+        return $article->with('category', 'user', 'status')->where('slug', $slug)->first();
     }
 
     public function filter(ArticleFilter $filters)

@@ -23,6 +23,7 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 
 Vue.component('user-component', require('./components/UserComponent.vue').default);
 Vue.component('article-component', require('./components/ArticleTableComponent').default);
+Vue.component('title-component', require('./components/TitleComponent').default);
 Vue.component('wysiwyg', require('./components/Wysiwyg').default);
 Vue.use(CKEditor);
 

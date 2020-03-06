@@ -14,6 +14,11 @@ class Article extends Model
 
     protected $appends = ['articleUrl', 'createdAtForHumans', 'updatedAtForHumans'];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_twitch_id');

@@ -25,6 +25,7 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
+            'slug'      => 'unique:articles,slug',
             'title'     => 'required',
             'body'      => 'required',
             'category'  => 'required'

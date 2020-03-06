@@ -6,6 +6,7 @@ use App\Article;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\TwitchAuthService;
 use GuzzleHttp\Client;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,7 @@ class HomeController extends Controller
 
         return view('index', [
             'user' => $user,
-            'articles' => Article::latest()->paginate(25)
+            'articles' => Article::latest()->where('status_id', '2')->paginate(10)
         ]);
     }
 
@@ -98,6 +99,16 @@ class HomeController extends Controller
         Auth::logout();
 
         return back();
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function duplicateSlug(Request $request)
+    {
+        $duplicate = Article::withTrashed()->where('slug', $request->get('slug'))->count() !== 0;
+        return $duplicate ? 'true' : 'false';
     }
 
     /**
