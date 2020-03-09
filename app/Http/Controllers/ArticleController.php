@@ -75,14 +75,14 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param Article $article
-     * @return Response
+     * @return View
      */
     public function show(Article $article)
     {
-        //
+        return view('articles.show', [
+            'article' => $article
+        ]);
     }
 
     /**

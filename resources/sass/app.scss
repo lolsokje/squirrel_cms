@@ -71,7 +71,7 @@ ul {
         display: inline-block;
 
         a {
-            color: $text-colour;
+            color: $link-colour;
 
             &:hover {
                 cursor: pointer;
@@ -121,7 +121,7 @@ table {
     }
 
     a {
-        color: #666666;
+        color: $link-colour;
 
         &:hover {
             text-decoration: underline;
@@ -232,3 +232,20 @@ table {
         margin: 20px 0;
     }
 }
+
+#article-list {
+    padding-bottom: 50px;
+}
+
+.article {
+    @include box-shadow;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 25px;
+
+    a {
+        color: $link-colour;
+    }
+}
+

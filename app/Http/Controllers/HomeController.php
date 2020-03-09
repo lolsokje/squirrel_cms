@@ -40,7 +40,7 @@ class HomeController extends Controller
 
         return view('index', [
             'user' => $user,
-            'articles' => Article::latest()->where('status_id', '2')->paginate(10)
+            'articles' => Article::latest()->with('user')->where('status_id', '2')->paginate(10)
         ]);
     }
 
