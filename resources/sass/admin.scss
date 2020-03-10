@@ -1,0 +1,61 @@
+@import 'variables';
+@import 'buttons';
+@import 'mixins';
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: $background-color-light;
+    font-family: $font-family-open-sans;
+    height: 946px;
+}
+
+.sidebar {
+    padding-top: 20px;
+    background-color: #2C3E4E;
+    width: 200px;
+    min-height: 100%;
+    color: $text-colour;
+
+    #user-details {
+        //padding-left: 20px;
+        margin: 0 auto 30px auto;
+        text-align: center;
+
+        img {
+            margin-top: 15px;
+            width: 130px;
+            height: 130px;
+        }
+    }
+
+    ul {
+        list-style-type: none;
+
+        .nav-item {
+            width: 100%;
+            box-sizing: border-box;
+            //border: 1px solid red;
+
+            a {
+                padding: 5px 20px;
+                box-sizing: border-box;
+                display: block;
+                width: 100%;
+                color: $text-colour;
+                text-decoration: none;
+                //border: 1px solid orange;
+
+                .nav-item-text {
+                    display: inline-block;
+                    width: 65%;
+                    margin-left: 10px;
+                    //border: 1px solid blue;
+                }
+            }
+        }
+    }
+}
