@@ -107,8 +107,13 @@ class HomeController extends Controller
      */
     public function duplicateSlug(Request $request)
     {
-        $duplicate = Article::withTrashed()->where('slug', $request->get('slug'))->count() !== 0;
-        return $duplicate ? 'true' : 'false';
+        $duplicate = Article::withTrashed()
+                ->where('slug', $request->get('slug'));
+
+        if ($request->get('id') !== null) {
+            $duplicate->where('id', '!=', $request->get('id'));
+        }
+        return $duplicate->count() ? 'true' : 'false';
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleRequest extends FormRequest
@@ -25,7 +26,6 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'slug'      => 'unique:articles,slug',
             'title'     => 'required',
             'body'      => 'required',
             'category'  => 'required'
