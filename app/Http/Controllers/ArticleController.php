@@ -24,7 +24,8 @@ class ArticleController extends Controller
     /**
      * @return View
      */
-    public function index(): View {
+    public function index(): View
+    {
         $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
         $editors = User::permission('edit articles')->get();
 
