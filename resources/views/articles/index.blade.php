@@ -1,7 +1,7 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 
 @section('content')
-    <div class="wide-container">
+    <div class="container">
         <div class="page-header">
             <h1>Articles</h1>
         </div>

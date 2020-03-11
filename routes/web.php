@@ -24,21 +24,21 @@ Route::get('/logout', 'HomeController@logout')->name('logout');
 Route::prefix('admin')->group(function () {
     Route::get('/', 'AdminController@index')->name('admin.index');
 
-    Route::get('/users', 'AdminController@users')->name('admin.users');
-
     Route::post('/users/update/{user}', 'AdminController@updateUser')->name('admin.users.update');
+
+    Route::get('/users', 'AdminController@users')->name('admin.users')->middleware(['permission:manage']);
+
+    Route::resources([
+        'articles' => 'ArticleController'
+    ]);
+
+    Route::put('articles/{article}/republish', 'ArticleController@republish')->name('articles.republish');
+
+    Route::put('articles/{article}/publish', 'ArticleController@publish')->name('articles.publish');
+
+    Route::get('articles/generate/{count}', 'ArticleController@generate');
+
+    Route::get('filters/articles', 'ArticleController@filter')->name('articles.filter');
+
+    Route::post('article/duplicate_slug', 'HomeController@duplicateSlug');
 });
-
-Route::resources([
-    'articles' => 'ArticleController'
-]);
-
-Route::put('articles/{article}/republish', 'ArticleController@republish')->name('articles.republish');
-
-Route::put('articles/{article}/publish', 'ArticleController@publish')->name('articles.publish');
-
-Route::get('articles/generate/{count}', 'ArticleController@generate');
-
-Route::get('filters/articles', 'ArticleController@filter')->name('articles.filter');
-
-Route::post('article/duplicate_slug', 'HomeController@duplicateSlug');

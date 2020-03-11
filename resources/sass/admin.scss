@@ -1,6 +1,4 @@
-@import 'variables';
-@import 'buttons';
-@import 'mixins';
+@import 'general';
 
 * {
     padding: 0;
@@ -13,12 +11,21 @@ body {
     height: 946px;
 }
 
+#wrapper {
+    display: flex;
+}
+
 .sidebar {
+    flex: 1;
     padding-top: 20px;
     background-color: #2C3E4E;
     width: 200px;
-    min-height: 100%;
+    min-height: 100vh;
     color: $text-colour;
+
+    #sidebar-header {
+        margin-top: 30px;
+    }
 
     #user-details {
         //padding-left: 20px;
@@ -38,24 +45,91 @@ body {
         .nav-item {
             width: 100%;
             box-sizing: border-box;
-            //border: 1px solid red;
 
             a {
-                padding: 5px 20px;
+                padding: 10px 20px;
                 box-sizing: border-box;
                 display: block;
                 width: 100%;
                 color: $text-colour;
                 text-decoration: none;
-                //border: 1px solid orange;
+
+                &:hover {
+                    background-color: #2C3234;
+                }
 
                 .nav-item-text {
                     display: inline-block;
                     width: 65%;
                     margin-left: 10px;
-                    //border: 1px solid blue;
                 }
             }
         }
+
+        .active {
+            box-sizing: border-box;
+            border-left: 5px solid $accent-colour;
+
+            a {
+                padding: 10px 20px 10px 15px;
+            }
+        }
+
+        .sub-item {
+            a {
+                box-sizing: border-box;
+                padding-left: 30px;
+            }
+        }
+    }
+}
+
+#app {
+    flex: 8;
+    padding: 30px 40px;
+}
+
+#article-filter {
+    @include box-shadow;
+    display: flex;
+    margin-top: 30px;
+    background-color: white;
+    padding: 10px;
+
+    input[type="text"] {
+        width: 200px;
+        padding: 5px;
+        border: none;
+        border-bottom: 1px solid #CCCCCC;
+        outline: none;
+    }
+
+    #selects {
+        margin-left: 50px;
+
+        .styled-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 5px!important;
+            width: 200px;
+            text-align: center;
+            border-radius: 0;
+            background-color: white;
+            border: none;
+            border-bottom: 1px solid #CCCCCC;
+            outline: none;
+        }
+    }
+}
+
+#admin-items-wrapper {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+
+    .item {
+        flex: 0 0 48%;
+        background-color: red;
     }
 }

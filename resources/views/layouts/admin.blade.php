@@ -9,33 +9,13 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 <body>
-    <div class="sidebar">
-        <div id="user-details">
-            <img src="{{ Auth::user()->profile_image }}" alt="">
-            <p id="display_name">{{ Auth::user()->display_name }}</p>
-        </div>
-        <ul>
-            <li class="nav-item">
-                <a href="{{ route('articles.index') }}">
-                    <i class="fa fa-newspaper-o"></i>
-                    <span class="nav-item-text">
-                        Articles
-                    </span>
-                    <i class="fa fa-caret-right"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.users') }}">
-                    <i class="fa fa-users"></i>
-                    <span class="nav-item-text">
-                        Users
-                    </span>
-                    <i class="fa fa-caret-right"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <div id="wrapper">
+        @include('partials.admin-sidebar')
 
-    @yield('content')
+        <div id="app">
+            @yield('content')
+        </div>
+        <script src="{{ asset('js/app.js') }}"></script>
+    </div>
 </body>
 </html>
