@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.css">
@@ -13,11 +13,6 @@
         <form action="{{ route('articles.update', $article) }}" method="POST">
             @csrf
             @method('PUT')
-
-{{--            <div class="form-group">--}}
-{{--                <label for="title">Title</label>--}}
-{{--                <input type="text" name="title" id="title" class="form-control" value="{{ $article->title }}" required>--}}
-{{--            </div>--}}
 
             <title-component :article="{{ $article }}"></title-component>
 

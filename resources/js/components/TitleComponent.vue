@@ -63,7 +63,7 @@
             },
             checkForDuplicateSlugs: _.debounce(function () {
                 const id = this.article !== undefined ? this.article.id : null;
-                axios.post('/article/duplicate_slug', { slug: this.slug, id: id })
+                axios.post('/admin/article/duplicate_slug', { slug: this.slug, id: id })
                     .then(res => this.duplicateSlug = res.data)
             }, 500)
         }

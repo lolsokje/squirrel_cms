@@ -1,0 +1,30 @@
+@import '_variables.scss';
+@import '_mixins.scss';
+
+table {
+    @include box-shadow;
+    width: 100%;
+    margin: 30px auto;
+    background-color: white;
+    box-sizing: border-box;
+    border-collapse: collapse;
+
+    th {
+        border-bottom: 1px solid $text-colour;
+        padding: 10px;
+        text-align: left;
+    }
+
+    td {
+        border-bottom: 1px solid $text-colour;
+        padding: 13px 10px;
+    }
+
+    a {
+        color: $link-colour;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
