@@ -129,7 +129,7 @@ class ArticleController extends Controller
             $article->setStatus('draft');
         }
 
-        return redirect()->route('index');
+        return redirect()->route('articles.index');
     }
 
     public function destroy(Article $article)

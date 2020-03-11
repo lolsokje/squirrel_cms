@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role:Administrator']);
+        $this->middleware(['permission:edit articles']);
     }
 
     public function index()
