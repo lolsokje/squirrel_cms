@@ -11,8 +11,7 @@
             <tr>
                 <th>Username</th>
                 <th>Display Name</th>
-                <th>Edit Articles</th>
-                <th>Manage Website</th>
+                <th>Roles</th>
                 <th></th>
             </tr>
             </thead>

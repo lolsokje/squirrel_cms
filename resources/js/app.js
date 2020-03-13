@@ -25,6 +25,7 @@ Vue.component('user-component', require('./components/UserComponent.vue').defaul
 Vue.component('article-component', require('./components/ArticleTableComponent').default);
 Vue.component('title-component', require('./components/TitleComponent').default);
 Vue.component('wysiwyg', require('./components/Wysiwyg').default);
+Vue.component('user-edit-component', require('./components/UserEditComponent').default);
 Vue.use(CKEditor);
 
 /**

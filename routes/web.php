@@ -28,6 +28,9 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/users', 'AdminController@users')->name('admin.users')->middleware(['permission:manage']);
 
+    Route::get('/users/{login_name}/edit', 'AdminController@editUser')
+        ->name('admin.users.edit')->middleware(['permission:manage']);
+
     Route::resources([
         'articles' => 'ArticleController'
     ]);
