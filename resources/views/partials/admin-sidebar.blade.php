@@ -47,8 +47,8 @@
                     </span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="#">
+            <li class="nav-item" {{ Request::route()->getName() === 'admin.roles' ? 'active' : '' }}>
+                <a href="{{ route('admin.roles') }}">
                     <i class="fas fa-user-lock"></i>
                     <span class="nav-item-text">
                         Roles

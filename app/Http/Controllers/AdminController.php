@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
@@ -30,6 +31,26 @@ class AdminController extends Controller
 
         return view('admin.users', [
             'users' => $users
+        ]);
+    }
+
+    public function roles(): View
+    {
+        $roles = Role::all();
+
+        return view('admin.roles.index', [
+            'roles' => $roles
+        ]);
+    }
+
+    public function editRole(string $roleName)
+    {
+        $role = Role::with('permissions')->where('name', $roleName)->firstOrFail();
+        $permissions = Permission::all();
+
+        return view('admin.roles.edit', [
+            'role' => $role,
+            'permissions' => $permissions
         ]);
     }
 
