@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        {{ Breadcrumbs::render('articles') }}
         <div class="page-header">
             <h1>Articles</h1>
         </div>

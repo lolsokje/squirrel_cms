@@ -1,9 +1,12 @@
 <template>
     <div>
         <h3>Roles:</h3>
-        <ul>
-            <li v-for="role in this.user.roles">{{ role.name }} <i class="fa fa-minus-circle" @click="removeRole(role.id)"></i></li>
-        </ul>
+        <form action="#">
+            <div v-for="role in roles" class="form-group">
+                <label :for="role.id">{{ role.name }}</label>
+                <input type="checkbox" :id="role.id" v-model="role.id">
+            </div>
+        </form>
     </div>
 </template>
 
