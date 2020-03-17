@@ -4,12 +4,14 @@
             <thead>
             <tr>
                 <th>Permission</th>
+                <th>Description</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="permission in permissions">
                 <td>{{ permission.name }}</td>
+                <td>{{ permission.description }}</td>
                 <td>
                     <input type="checkbox" :id="permission.id" :checked="hasPermission(permission)">
                 </td>

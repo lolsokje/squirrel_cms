@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'consts' => [
+        'super_admin_name' => 'Super Admin'
+    ],
 
     'models' => [
 
