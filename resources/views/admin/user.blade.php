@@ -2,12 +2,14 @@
     <td>{{ $user->login_name }}</td>
     <td>{{ $user->display_name }}</td>
     <td>
-        <input name="edit articles" type="checkbox" {{ $user->can('edit articles') ? 'checked' : '' }}>
+        <ul>
+            @foreach ($user->roles as $role)
+                <li>{{ $role->name }}</li>
+            @endforeach
+        </ul>
     </td>
     <td>
-        <input name="manage" type="checkbox" {{ $user->can('manage') ? 'checked' : '' }}>
-    </td>
-    <td>
-        <a href="#" class="btn btn-primary">Update</a>
+        <a href="{{ route('admin.users.edit', $user->display_name) }}" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a>
+        <a href="#" class="btn btn-danger"><i class="fa fa-user-times"></i> Delete</a>
     </td>
 </tr>

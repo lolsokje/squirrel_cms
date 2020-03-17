@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        {{ Breadcrumbs::render('users') }}
         <div class="page-header">
             <h1>Manage Users</h1>
         </div>
@@ -11,8 +12,7 @@
             <tr>
                 <th>Username</th>
                 <th>Display Name</th>
-                <th>Edit Articles</th>
-                <th>Manage Website</th>
+                <th>Roles</th>
                 <th></th>
             </tr>
             </thead>
