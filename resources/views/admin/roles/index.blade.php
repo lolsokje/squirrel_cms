@@ -5,6 +5,8 @@
         <div class="page-header">
             <h1>Roles</h1>
 
+            <a href="{{ route('admin.roles.create') }}" class="btn btn-primary">New role</a>
+
             <table>
                 <thead>
                     <tr>

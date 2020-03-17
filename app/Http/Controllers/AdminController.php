@@ -44,6 +44,38 @@ class AdminController extends Controller
     }
 
     /**
+     * @return View
+     */
+    public function createRole(): View
+    {
+        $permissions = Permission::all();
+
+        return view('admin.roles.create', [
+            'permissions' => $permissions
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function storeRole(Request $request)
+    {
+        $role = Role::create([
+            'name' => $request->get('name'),
+            'description' => $request->get('description')
+        ]);
+
+        foreach ($request->get('permissions') as $permissionId) {
+            $permission = Permission::findOrFail((int) $permissionId);
+
+            $role->givePermissionTo($permission);
+        }
+
+        return redirect()->route('admin.roles');
+    }
+
+    /**
      * @param string $roleName
      * @return RedirectResponse|View
      */

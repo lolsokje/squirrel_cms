@@ -30,6 +30,12 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/roles', 'AdminController@roles')->name('admin.roles')->middleware(['permission:manage']);
 
+    Route::get('/role/create', 'AdminController@createRole')->name('admin.roles.create')
+        ->middleware(['permission:manage']);
+
+    Route::post('/role/store', 'AdminController@storeRole')->name('admin.roles.store')
+        ->middleware(['permission:manage']);
+
     Route::get('/roles/{role_name}', 'AdminController@editRole')
         ->name('admin.role.edit')->middleware(['permission:manage']);
 
