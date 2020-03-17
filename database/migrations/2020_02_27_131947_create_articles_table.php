@@ -18,9 +18,13 @@ class CreateArticlesTable extends Migration
             $table->string('user_twitch_id');
             $table->string('title');
             $table->text('body');
+            $table->string('slug')->unique();
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('status_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
+            $table->foreign('status_id')->references('id')->on('statuses');
             $table->foreign('category_id')->references('id')->on('categories');
         });
     }

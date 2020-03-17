@@ -7,21 +7,22 @@ use Exception;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
 
-class SetAdminCommand extends Command
+class SetSuperAdminCommand extends Command
 {
+    private string $roleName;
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'admin:add {--display_name= : The user\'s display name} {--twitch_id= : The user\'s twitch id}';
+    protected $signature = 'superadmin:add {--display_name= : The user\'s display name} {--twitch_id= : The user\'s twitch id}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = "Adds the 'Administrator' role to a defined user";
+    protected $description = "Adds the 'Super Admin' role to a defined user";
 
     /**
      * Create a new command instance.
@@ -31,6 +32,7 @@ class SetAdminCommand extends Command
     public function __construct()
     {
         parent::__construct();
+        $this->roleName = config('permission.consts.super_admin_name');
     }
 
     /**
@@ -63,10 +65,10 @@ class SetAdminCommand extends Command
             }
         }
 
-        $role = Role::where('name', 'Administrator')->first();
+        $role = Role::where('name', $this->roleName)->first();
 
         if (!$role) {
-            $this->error('Role \'Administrator\' not found, are you sure you ran the database seeder?');
+            $this->error("Role '{$this->roleName}' not found, are you sure you ran the database seeder?");
             return;
         }
 
@@ -81,7 +83,7 @@ class SetAdminCommand extends Command
             $user->assignRole($role);
             $this->info("Successfully added user with {$attribute['column']} '{$attribute['value']}' as Administrator");
         } catch (Exception $e) {
-            $this->error("Error when adding Administrator: {$e->getMessage()}");
+            $this->error("Error when adding {$this->roleName}: {$e->getMessage()}");
         }
 
         return;

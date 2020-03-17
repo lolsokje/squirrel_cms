@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -37,7 +36,7 @@ class AdminController extends Controller
 
     public function roles(): View
     {
-        $roles = Role::all();
+        $roles = Role::where('name', '!=', config('permission.consts.super_admin_name'))->get();
 
         return view('admin.roles.index', [
             'roles' => $roles
@@ -46,10 +45,13 @@ class AdminController extends Controller
 
     /**
      * @param string $roleName
-     * @return View
+     * @return RedirectResponse|View
      */
-    public function editRole(string $roleName): View
+    public function editRole(string $roleName)
     {
+        if ($roleName === config('permission.consts.super_admin_name')) {
+            return redirect()->route('admin.roles');
+        }
         $role = Role::with('permissions')->where('name', $roleName)->firstOrFail();
         $permissions = Permission::all();
 
