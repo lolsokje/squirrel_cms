@@ -22,35 +22,33 @@ Route::get('/redirect', 'HomeController@redirect')->name('redirect');
 Route::get('/logout', 'HomeController@logout')->name('logout');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/', 'AdminController@index')->name('admin.index');
+    Route::middleware(['permission:manage'])->group(function() {
+        Route::get('/users', 'AdminController@users')->name('admin.users');
 
-    Route::post('/users/update/{user}', 'AdminController@updateUser')->name('admin.users.update');
+        Route::get('/roles', 'RoleController@index')->name('admin.roles');
 
-    Route::get('/users', 'AdminController@users')->name('admin.users')->middleware(['permission:manage']);
+        Route::get('/role/create', 'RoleController@create')->name('admin.roles.create');
 
-    Route::get('/roles', 'AdminController@roles')->name('admin.roles')->middleware(['permission:manage']);
+        Route::post('/role/store', 'RoleController@store')->name('admin.roles.store');
 
-    Route::get('/role/create', 'AdminController@createRole')->name('admin.roles.create')
-        ->middleware(['permission:manage']);
+        Route::get('/roles/{role_name}', 'RoleController@edit')->name('admin.role.edit');
 
-    Route::post('/role/store', 'AdminController@storeRole')->name('admin.roles.store')
-        ->middleware(['permission:manage']);
+        Route::post('/roles/{role_name}/edit/permissions', 'RoleController@update')
+            ->name('admin.roles.edit.permissions');
 
-    Route::get('/roles/{role_name}', 'AdminController@editRole')
-        ->name('admin.role.edit')->middleware(['permission:manage']);
+        Route::get('/users/{login_name}/edit', 'AdminController@editUser')->name('admin.users.edit');
 
-    Route::post('/roles/{role_name}/edit/permissions', 'AdminController@editRolePermissions')
-        ->name('admin.roles.edit.permissions')->middleware(['permission:manage']);
-
-    Route::get('/users/{login_name}/edit', 'AdminController@editUser')
-        ->name('admin.users.edit')->middleware(['permission:manage']);
-
-    Route::post('/users/{login_name}/edit/roles', 'AdminController@editUserRoles')
-        ->name('admin.users.edit.roles')->middleware(['permission:manage']);
+        Route::post('/users/{login_name}/edit/roles', 'AdminController@editUserRoles')
+            ->name('admin.users.edit.roles');
+    });
 
     Route::resources([
         'articles' => 'ArticleController'
     ]);
+
+    Route::get('/', 'AdminController@index')->name('admin.index');
+
+    Route::post('/users/update/{user}', 'AdminController@updateUser')->name('admin.users.update');
 
     Route::put('articles/{article}/republish', 'ArticleController@republish')->name('articles.republish');
 
