@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,11 @@ class AdminController extends Controller
         ]);
     }
 
-    public function editRole(string $roleName)
+    /**
+     * @param string $roleName
+     * @return View
+     */
+    public function editRole(string $roleName): View
     {
         $role = Role::with('permissions')->where('name', $roleName)->firstOrFail();
         $permissions = Permission::all();
@@ -52,6 +57,17 @@ class AdminController extends Controller
             'role' => $role,
             'permissions' => $permissions
         ]);
+    }
+
+    /**
+     * @param string $roleName
+     * @param Request $request
+     */
+    public function editRolePermissions(string $roleName, Request $request): void
+    {
+        $role = Role::where('name', $roleName)->firstOrFail();
+
+        $role->syncPermissions($request->get('permissions'));
     }
 
     /**

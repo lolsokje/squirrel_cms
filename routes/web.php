@@ -33,6 +33,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/roles/{role_name}', 'AdminController@editRole')
         ->name('admin.role.edit')->middleware(['permission:manage']);
 
+    Route::post('/roles/{role_name}/edit/permissions', 'AdminController@editRolePermissions')
+        ->name('admin.roles.edit.permissions')->middleware(['permission:manage']);
+
     Route::get('/users/{login_name}/edit', 'AdminController@editUser')
         ->name('admin.users.edit')->middleware(['permission:manage']);
 
