@@ -16,6 +16,11 @@ Breadcrumbs::for('articles.new', function ($trail) {
     $trail->push('New article', route('articles.create'));
 });
 
+Breadcrumbs::for('articles.edit', function ($trail, $article) {
+    $trail->parent('articles');
+    $trail->push("{$article->title}", route('articles.edit', $article));
+});
+
 Breadcrumbs::for('users', function ($trail) {
     $trail->parent('home');
     $trail->push('Users', route('admin.users'));
@@ -24,4 +29,19 @@ Breadcrumbs::for('users', function ($trail) {
 Breadcrumbs::for('users.show', function ($trail, $user) {
     $trail->parent('users');
     $trail->push($user->display_name, route('admin.users.edit', $user));
+});
+
+Breadcrumbs::for('roles', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Roles', route('admin.roles'));
+});
+
+Breadcrumbs::for('roles.show', function ($trail, $role) {
+    $trail->parent('roles');
+    $trail->push($role->name, route('admin.role.edit', $role));
+});
+
+Breadcrumbs::for('roles.create', function ($trail) {
+    $trail->parent('roles');
+    $trail->push('New role', route('admin.roles.create'));
 });

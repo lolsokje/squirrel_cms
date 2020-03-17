@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        {{ Breadcrumbs::render('roles.create') }}
         <div class="page-header">
             <h1>Create new role</h1>
         </div>

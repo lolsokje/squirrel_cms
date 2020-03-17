@@ -7,6 +7,7 @@
 
 @section('content')
     <div class="container">
+        {{ Breadcrumbs::render('articles.edit', $article) }}
         <div class="page-header">
             <h1>Publish new article</h1>
         </div>

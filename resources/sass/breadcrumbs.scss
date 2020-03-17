@@ -1,0 +1,46 @@
+@import "variables";
+
+#breadcrumbs {
+    ul {
+        background-color: white;
+        border-radius: 5px;
+        margin: 30px 0;
+        padding: 10px;
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+
+        &+li:before {
+            color: $link-colour;
+            content: "\0002f";
+        }
+
+        &:first-child {
+            padding-left: 0;
+        }
+    }
+
+    a {
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $accent-colour;
+        padding: 0 .75em;
+    }
+
+    .active {
+        a {
+            font-weight: normal;
+            color: black;
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+}
