@@ -45,3 +45,18 @@ Breadcrumbs::for('roles.create', function ($trail) {
     $trail->parent('roles');
     $trail->push('New role', route('admin.roles.create'));
 });
+
+Breadcrumbs::for('categories', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Categories', route('admin.categories'));
+});
+
+Breadcrumbs::for('categories.edit', function ($trail, $category) {
+    $trail->parent('categories');
+    $trail->push($category->name, route('admin.categories.edit', $category->name));
+});
+
+Breadcrumbs::for('categories.create', function ($trail) {
+    $trail->parent('categories');
+    $trail->push('New category', route('admin.categories.create'));
+});

@@ -22,7 +22,7 @@ Route::get('/redirect', 'HomeController@redirect')->name('redirect');
 Route::get('/logout', 'HomeController@logout')->name('logout');
 
 Route::prefix('admin')->group(function () {
-    Route::middleware(['permission:manage'])->group(function() {
+    Route::middleware(['permission:manage'])->group(function () {
         Route::get('/users', 'AdminController@users')->name('admin.users');
 
         Route::get('/roles', 'RoleController@index')->name('admin.roles');
@@ -40,6 +40,16 @@ Route::prefix('admin')->group(function () {
 
         Route::post('/users/{login_name}/edit/roles', 'AdminController@editUserRoles')
             ->name('admin.users.edit.roles');
+
+        Route::get('/categories', 'CategoryController@index')->name('admin.categories');
+
+        Route::get('/categories/{name}/edit', 'CategoryController@edit')->name('admin.categories.edit');
+
+        Route::post('/categories', 'CategoryController@store')->name('admin.categories.store');
+
+        Route::post('/categories/{name}/update', 'CategoryController@store')->name('admin.categories.update');
+
+        Route::get('/categories/create', 'CategoryController@create')->name('admin.categories.create');
     });
 
     Route::resources([

@@ -22,6 +22,16 @@
                 </span>
             </a>
         </li>
+        @can('manage')
+            <li class="nav-item {{ Request::route()->getName() === 'admin.categories' ? 'active' : '' }}">
+                <a href="{{ route('admin.categories') }}">
+                    <i class="fas fa-tag"></i>
+                    <span class="nav-item-text">
+                        Categories
+                    </span>
+                </a>
+            </li>
+        @endcan
         <li class="nav-item {{ Request::route()->getName() === 'articles.index' ? 'active' : '' }}">
             <a href="{{ route('articles.index') }}">
                 <i class="fas fa-newspaper"></i>
@@ -47,7 +57,7 @@
                     </span>
                 </a>
             </li>
-            <li class="nav-item" {{ Request::route()->getName() === 'admin.roles' ? 'active' : '' }}>
+            <li class="nav-item {{ Request::route()->getName() === 'admin.roles' ? 'active' : '' }}">
                 <a href="{{ route('admin.roles') }}">
                     <i class="fas fa-user-lock"></i>
                     <span class="nav-item-text">
