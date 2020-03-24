@@ -15,6 +15,16 @@
             @csrf
             @method('PUT')
 
+            <div class="form-group">
+                @if ($errors->any())
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
             <title-component :article="{{ $article }}"></title-component>
 
             <div class="form-group">

@@ -11,9 +11,21 @@
             @csrf
 
             <div class="form-group">
+                @if ($errors->any())
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+            <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" class="form-control" value="{{ $category->name }}" required>
             </div>
+
+            <input type="hidden" name="id" value="{{ $category->id }}">
 
             <button type="submit" class="btn btn-primary">Save</button>
         </form>

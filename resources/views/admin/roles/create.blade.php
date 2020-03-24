@@ -11,13 +11,23 @@
             @csrf
 
             <div class="form-group">
+                @if ($errors->any())
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+            <div class="form-group">
                 <label for="name">Role name</label>
-                <input type="text" name="name" id="name" class="form-control" required>
+                <input type="text" name="name" id="name" class="form-control" required value="{{ old('name') }}">
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" name="description" id="description" class="form-control">
+                <input type="text" name="description" id="description" class="form-control" value="{{ old('description') }}">
             </div>
 
             <table>

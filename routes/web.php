@@ -47,7 +47,7 @@ Route::prefix('admin')->group(function () {
 
         Route::post('/categories', 'CategoryController@store')->name('admin.categories.store');
 
-        Route::post('/categories/{name}/update', 'CategoryController@store')->name('admin.categories.update');
+        Route::post('/categories/{name}/update', 'CategoryController@update')->name('admin.categories.update');
 
         Route::get('/categories/create', 'CategoryController@create')->name('admin.categories.create');
     });

@@ -15,13 +15,15 @@
         <form action="{{ route('articles.store') }}" method="POST">
             @csrf
 
-            @if ($errors->any())
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            @endif
+            <div class="form-group">
+                @if ($errors->any())
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
 
             <title-component></title-component>
 

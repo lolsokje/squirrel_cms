@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,10 +43,10 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param RoleRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(RoleRequest $request): RedirectResponse
     {
         $role = Role::create([
             'name' => $request->get('name'),

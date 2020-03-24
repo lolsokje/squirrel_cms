@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
@@ -37,10 +37,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CategoryRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CategoryRequest $request): RedirectResponse
     {
         Category::create([
             'name' => $request->get('name')
@@ -68,10 +68,10 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param string $name
-     * @param Request $request
+     * @param CategoryRequest $request
      * @return RedirectResponse
      */
-    public function update(string $name, Request $request): RedirectResponse
+    public function update(string $name, CategoryRequest $request): RedirectResponse
     {
         $category = Category::where('name', $name)->firstOrFail();
 
