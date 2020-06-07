@@ -21,6 +21,8 @@ Route::get('/redirect', 'HomeController@redirect')->name('redirect');
 
 Route::get('/logout', 'HomeController@logout')->name('logout');
 
+Route::get('articles/{article}/show', 'ArticleController@show')->name('articles.show');
+
 Route::prefix('admin')->group(function () {
     Route::middleware(['permission:manage'])->group(function () {
         Route::get('/users', 'AdminController@users')->name('admin.users');
@@ -52,9 +54,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/categories/create', 'CategoryController@create')->name('admin.categories.create');
     });
 
-    Route::resources([
-        'articles' => 'ArticleController'
-    ]);
+    Route::resource('articles', 'ArticleController')->except(['show']);
 
     Route::get('/', 'AdminController@index')->name('admin.index');
 

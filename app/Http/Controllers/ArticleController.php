@@ -29,7 +29,7 @@ class ArticleController extends Controller
         $articles = Article::withTrashed()->latest()->with('category', 'user', 'status')->paginate(25);
         $editors = User::permission('edit articles')->get();
 
-        return view('articles.index', [
+        return view('admin.articles.index', [
             'articles' => $articles,
             'categories' => Category::all(),
             'statuses' => Status::all(),
@@ -44,7 +44,7 @@ class ArticleController extends Controller
      */
     public function create(): View
     {
-        return view('articles.create', [
+        return view('admin.articles.create', [
             'categories' => Category::all()
         ]);
     }
@@ -95,7 +95,7 @@ class ArticleController extends Controller
     public function edit(string $slug)
     {
         $article = Article::withTrashed()->where('slug', $slug)->first();
-        return view('articles.edit', [
+        return view('admin.articles.edit', [
             'categories' => Category::all(),
             'article' => $article
         ]);
